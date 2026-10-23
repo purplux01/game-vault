@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090a10">
+<title>Tristan's Game Vault V2.0</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #090a10;
+    --panel: #11131d;
+    --panel2: #171a27;
+    --panel3: #1d2030;
+    --border: rgba(255,255,255,.09);
+    --text: #f1f1fb;
+    --muted: #9295ac;
+    --accent: #a78bfa;
+    --accent2: #7c5cfa;
+    --cyan: #67e8f9;
+    --radius: 17px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text);
+    background:
+        radial-gradient(ellipse at 70% -10%, rgba(124,92,250,.15), transparent 42%),
+        radial-gradient(ellipse at -10% 30%, rgba(40,180,220,.06), transparent 35%),
+        var(--bg);
+    font-family: Inter, Arial, sans-serif;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    color: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* HEADER */
+
+.topbar {
+    height: 76px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 0 5%;
+    border-bottom: 1px solid var(--border);
+    background: rgba(9,10,16,.8);
+    backdrop-filter: blur(18px);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: max-content;
+}
+
+.brand-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 23px;
+    background: linear-gradient(140deg, #a78bfa, #6340ed);
+    box-shadow: 0 6px 24px rgba(124,92,250,.25);
+}
+
+.brand-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+}
+
+.brand-subtitle {
+    font-size: 10px;
+    color: var(--accent);
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-top: 3px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-left: 25px;
+}
+
+.nav a {
+    font-size: 13px;
+    color: var(--muted);
+    transition: color .2s;
+}
+
+.nav a:hover {
+    color: white;
+}
+
+.header-search {
+    width: min(280px, 25vw);
+    margin-left: auto;
+    position: relative;
+}
+
+.header-search input {
+    width: 100%;
+    padding: 12px 14px 12px 40px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: var(--panel);
+    color: white;
+    outline: none;
+}
+
+.header-search input:focus {
+    border-color: var(--accent);
+}
+
+.search-symbol {
+    position: absolute;
+    left: 13px;
+    top: 11px;
+    color: var(--muted);
+}
+
+/* GENERAL LAYOUT */
+
+main {
+    width: 90%;
+    max-width: 1450px;
+    margin: 0 auto;
+}
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    margin-top: 36px;
+    padding: clamp(28px, 5vw, 66px);
+    min-height: 330px;
+    border: 1px solid rgba(167,139,250,.22);
+    border-radius: 25px;
+    background:
+        linear-gradient(105deg, rgba(14,15,29,.98), rgba(22,17,46,.94)),
+        var(--panel);
+    display: flex;
+    align-items: center;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    right: 6%;
+    top: -110px;
+    border-radius: 50%;
+    border: 1px solid rgba(167,139,250,.20);
+    box-shadow:
+        0 0 0 40px rgba(167,139,250,.025),
+        0 0 0 80px rgba(167,139,250,.025),
+        0 0 100px rgba(124,92,250,.12);
+    pointer-events: none;
+}
+
+.hero::after {
+    content: "GV";
+    position: absolute;
+    right: 12%;
+    top: 50%;
+    transform: translateY(-50%) rotate(-8deg);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 900;
+    font-size: clamp(110px, 22vw, 280px);
+    letter-spacing: -25px;
+    color: rgba(167,139,250,.07);
+    pointer-events: none;
+}
+
+.hero-content {
+    max-width: 650px;
+    position: relative;
+    z-index: 1;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #61e8a5;
+    box-shadow: 0 0 12px #61e8a5;
+}
+
+.hero h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(37px, 5.7vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -3px;
+    margin: 22px 0 16px;
+    font-weight: 900;
+}
+
+.hero h1 span {
+    color: var(--accent);
+}
+
+.hero p {
+    max-width: 520px;
+    line-height: 1.8;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    padding: 13px 18px;
+    border-radius: 11px;
+    border: 1px solid transparent;
+    font-size: 13px;
+    font-weight: 800;
+    transition: transform .2s, background .2s, border-color .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background: linear-gradient(130deg, #a78bfa, #7652f5);
+    box-shadow: 0 7px 24px rgba(124,92,250,.19);
+    color: white;
+}
+
+.btn-secondary {
+    border-color: var(--border);
+    background: rgba(255,255,255,.035);
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,.08);
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 22px 0 43px;
+}
+
+.stat {
+    background: rgba(17,19,29,.8);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 19px 22px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.stat-icon {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    background: rgba(167,139,250,.1);
+    border-radius: 12px;
+    font-size: 20px;
+}
+
+.stat-number {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+/* SECTION HEADINGS */
+
+.section {
+    margin: 0 0 45px;
+    scroll-margin-top: 100px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 23px;
+    letter-spacing: -.7px;
+    margin: 0;
+}
+
+.section-description {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+.small-label {
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 9px;
+}
+
+/* FILTERS */
+
+.library-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-btn {
+    padding: 9px 13px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    color: white;
+    background: rgba(167,139,250,.15);
+    border-color: rgba(167,139,250,.45);
+}
+
+.sort-select {
+    background: var(--panel);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 10px;
+    font-size: 11px;
+    max-width: 100%;
+}
+
+/* GAME CARDS */
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.game-card {
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: linear-gradient(145deg, #151722, #101119);
+    transition: transform .22s, border-color .22s, box-shadow .22s;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(167,139,250,.45);
+    box-shadow: 0 12px 35px rgba(0,0,0,.24);
+}
+
+.game-art {
+    height: 144px;
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+        radial-gradient(ellipse at 50% 120%, var(--glow), transparent 70%),
+        linear-gradient(140deg, var(--art1), var(--art2));
+}
+
+.game-art::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .22;
+    background-image:
+        linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px);
+    background-size: 25px 25px;
+    mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.game-art::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 130px;
+    height: 130px;
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 35px;
+    transform: rotate(36deg);
+}
+
+.game-art-symbol {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 52px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -3px;
+    color: rgba(255,255,255,.92);
+    text-shadow: 0 7px 25px rgba(0,0,0,.3);
+    z-index: 1;
+    transition: transform .3s;
+}
+
+.game-card:hover .game-art-symbol {
+    transform: scale(1.12) rotate(-4deg);
+}
+
+.card-label {
+    position: absolute;
+    top: 11px;
+    left: 11px;
+    color: white;
+    background: rgba(5,6,12,.68);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .8px;
+    padding: 6px 8px;
+    backdrop-filter: blur(8px);
+    z-index: 2;
+}
+
+.favorite-btn {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+    z-index: 3;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 9px;
+    background: rgba(5,6,12,.65);
+    font-size: 17px;
+}
+
+.favorite-btn.favorited {
+    color: #ff82bd;
+}
+
+.game-info {
+    padding: 14px;
+}
+
+.game-name {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.game-description {
+    margin-top: 7px;
+    height: 31px;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.game-footer {
+    margin-top: 13px;
+    padding-top: 11px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.game-genre {
+    color: var(--muted);
+    font-size: 9px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.play-btn {
+    border: 0;
+    padding: 8px 11px;
+    border-radius: 8px;
+    background: rgba(167,139,250,.14);
+    color: #c8b8ff;
+    font-size: 10px;
+    font-weight: 800;
+    white-space: nowrap;
+    transition: .2s;
+}
+
+.play-btn:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+.no-results {
+    grid-column: 1 / -1;
+    padding: 55px 20px;
+    text-align: center;
+    color: var(--muted);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+}
+
+/* RECENTLY PLAYED */
+
+.recent-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.recent-item {
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.recent-item:hover {
+    border-color: var(--accent);
+}
+
+/* FOOTER */
+
+footer {
+    width: 90%;
+    max-width: 1450px;
+    margin: 60px auto 0;
+    border-top: 1px solid var(--border);
+    padding: 25px 0 35px;
+    color: var(--muted);
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+footer strong {
+    color: var(--text);
+}
+
+/* GAME PLAYER */
+
+.player-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(4,5,9,.97);
+    backdrop-filter: blur(18px);
+    padding: 18px;
+}
+
+.player-overlay.open {
+    display: flex;
+    flex-direction: column;
+}
+
+.player-top {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.player-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 800;
+    margin-right: auto;
+}
+
+.player-status {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.player-frame-wrap {
+    flex: 1;
+    min-height: 0;
+    margin-top: 12px;
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.player-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #000;
+}
+
+.player-bottom {
+    padding-top: 12px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.icon-btn {
+    border: 1px solid var(--border);
+    background: var(--panel2);
+    color: white;
+    border-radius: 9px;
+    padding: 10px 13px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.icon-btn:hover {
+    border-color: var(--accent);
+}
+
+@media (max-width: 1050px) {
+    .game-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .nav {
+        gap: 14px;
+        margin-left: 5px;
+    }
+}
+
+@media (max-width: 740px) {
+    .topbar {
+        height: auto;
+        min-height: 70px;
+        padding: 13px 5%;
+        flex-wrap: wrap;
+        gap: 13px;
+    }
+
+    .brand-title {
+        font-size: 14px;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .header-search {
+        width: 100%;
+        order: 3;
+    }
+
+    main {
+        width: 92%;
+    }
+
+    .hero {
+        margin-top: 20px;
+        min-height: 300px;
+        padding: 29px 23px;
+    }
+
+    .hero::before {
+        right: -180px;
+    }
+
+    .hero h1 {
+        letter-spacing: -1.8px;
+    }
+
+    .hero::after {
+        right: 0;
+    }
+
+    .stats {
+        gap: 8px;
+        margin-bottom: 35px;
+    }
+
+    .stat {
+        padding: 13px 10px;
+        gap: 7px;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .stat-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+    }
+
+    .stat-number {
+        font-size: 21px;
+    }
+
+    .stat-label {
+        font-size: 10px;
+    }
+
+    .game-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px;
+    }
+
+    .game-art {
+        height: 115px;
+    }
+
+    .game-art-symbol {
+        font-size: 42px;
+    }
+
+    .game-info {
+        padding: 11px;
+    }
+
+    .game-name {
+        font-size: 12px;
+    }
+
+    .section-title {
+        font-size: 20px;
+    }
+
+    .library-toolbar {
+        align-items: flex-start;
+    }
+
+    .player-overlay {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 380px) {
+    .game-grid {
+        gap: 8px;
+    }
+
+    .game-art {
+        height: 100px;
+    }
+
+    .game-info {
+        padding: 9px;
+    }
+
+    .game-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .play-btn {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="#" class="brand" aria-label="Tristan's Game Vault home">
+        <div class="brand-icon">♜</div>
+        <div>
+            <div class="brand-title">TRISTAN'S GAME VAULT</div>
+            <div class="brand-subtitle">VERSION 2.0</div>
+        </div>
+    </a>
+
+    <nav class="nav">
+        <a href="#home">Home</a>
+        <a href="#library">Game Library</a>
+        <a href="#recent">Recently Played</a>
+        <a href="#favorites">Favorites</a>
+    </nav>
+
+    <div class="header-search">
+        <span class="search-symbol">⌕</span>
+        <input id="searchInput" type="search"
+            placeholder="Search games..."
+            aria-label="Search games">
+    </div>
+</header>
+
+<main>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="eyebrow">
+                <span class="live-dot"></span>
+                YOUR PERSONAL GAME COLLECTION
+            </div>
+
+            <h1>ENTER THE<br><span>GAME VAULT.</span></h1>
+
+            <p>
+                Your games. Your collection. Your rules.
+                Explore your personal vault of browser games, discover
+                something to play, and jump straight into the action.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#library" class="btn btn-primary">
+                    ▶ &nbsp; Explore the library
+                </a>
+                <a href="#favorites" class="btn btn-secondary">
+                    ♡ &nbsp; Your favorites
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats" aria-label="Library statistics">
+        <div class="stat">
+            <div class="stat-icon">🎮</div>
+            <div>
+                <div class="stat-number" id="totalGames">43</div>
+                <div class="stat-label">GAMES IN THE VAULT</div>
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">♥</div>
+            <div>
+                <div class="stat-number" id="favoriteCount">0</div>
+                <div class="stat-label">YOUR FAVORITES</div>
+            </div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-icon">◷</div>
+            <div>
+                <div class="stat-number" id="playedCount">0</div>
+                <div class="stat-label">GAMES YOU'VE OPENED</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="library">
+        <div class="section-heading">
+            <div>
+                <div class="small-label">THE COLLECTION</div>
+                <h2 class="section-title">Game Library</h2>
+                <div class="section-description">
+                    Choose a game and start playing.
+                </div>
+            </div>
+        </div>
+
+        <div class="library-toolbar">
+            <div class="filters" id="filters">
+                <button class="filter-btn active" data-category="All">All Games</button>
+                <button class="filter-btn" data-category="Horror">Horror</button>
+                <button class="filter-btn" data-category="Platformer">Platformers</button>
+                <button class="filter-btn" data-category="Action">Action</button>
+                <button class="filter-btn" data-category="Story">Story</button>
+                <button class="filter-btn" data-category="Simulation">Simulation</button>
+                <button class="filter-btn" data-category="Racing">Racing</button>
+                <button class="filter-btn" data-category="Puzzle">Puzzle</button>
+                <button class="filter-btn" data-category="Other">Other</button>
+            </div>
+
+            <select id="sortSelect" class="sort-select" aria-label="Sort games">
+                <option value="featured">Featured order</option>
+                <option value="az">Name: A–Z</option>
+                <option value="za">Name: Z–A</option>
+                <option value="recent">Recently played</option>
+            </select>
+        </div>
+
+        <div class="game-grid" id="gameGrid"></div>
+    </section>
+
+    <section class="section" id="favorites">
+        <div class="section-heading">
+            <div>
+                <div class="small-label">YOUR PERSONAL PICKS</div>
+                <h2 class="section-title">Favorites</h2>
+                <div class="section-description">
+                    Games you've marked with a heart.
+                </div>
+            </div>
+        </div>
+        <div class="game-grid" id="favoriteGrid"></div>
+    </section>
+
+    <section class="section" id="recent">
+        <div class="section-heading">
+            <div>
+                <div class="small-label">PICK UP WHERE YOU LEFT OFF</div>
+                <h2 class="section-title">Recently Played</h2>
+                <div class="section-description">
+                    Your recently opened games are saved on this device.
+                </div>
+            </div>
+        </div>
+        <div class="recent-list" id="recentList"></div>
+    </section>
+</main>
+
+<footer>
+    <div>
+        <strong>TRISTAN'S GAME VAULT V2.0</strong>
+        <div style="margin-top:6px">Built for games, made for fun.</div>
+    </div>
+    <div>Personal browser game library</div>
+</footer>
+
+<!-- GAME PLAYER -->
+<div class="player-overlay" id="playerOverlay" role="dialog"
+    aria-modal="true" aria-label="Game player">
+
+    <div class="player-top">
+        <div class="brand-icon" style="width:38px;height:38px">♜</div>
+        <div class="player-title" id="playerTitle">Now Playing</div>
+        <div class="player-status">GAME VAULT PLAYER</div>
+
+        <button class="icon-btn" id="openNewTab">↗ Open tab</button>
+        <button class="icon-btn" id="fullscreenBtn">⛶ Fullscreen</button>
+        <button class="icon-btn" id="closePlayer">✕ Close</button>
+    </div>
+
+    <div class="player-frame-wrap" id="frameWrap">
+        <iframe class="player-frame" id="gameFrame"
+            title="Selected game"
+            allow="fullscreen; autoplay; gamepad; clipboard-read; clipboard-write"
+            allowfullscreen></iframe>
+    </div>
+
+    <div class="player-bottom">
+        If a game doesn't load here, try <b>Open tab</b>.
+        Some ports need additional setup or use a different entry-file path.
+    </div>
+</div>
+
+<script>
+/*
+  TRISTAN'S GAME VAULT V2.0
+
+  This file expects your game folders to sit beside index.html.
+
+  Example:
+    index.html
+    getting-over-it/index.html
+    cuphead/index.html
+    repo/index.html
+
+  If a game uses a different entry file, change its "entry"
+  property below.
+*/
+
+const games = [
+    {
+        name: "Amanda the Adventurer",
+        path: "amanda-the-adventurer",
+        category: "Horror",
+        symbol: "AM",
+        description: "A mysterious cartoon tape turns into a nightmare.",
+        colors: ["#d66a39", "#632d40"],
+        featured: true
+    },
+    {
+        name: "Andy's Apple Farm",
+        path: "andys-apple-farm",
+        category: "Horror",
+        symbol: "🍎",
+        description: "A retro-looking world with something hiding underneath.",
+        colors: ["#a52c38", "#361d42"]
+    },
+    {
+        name: "Baldi's Basics Plus",
+        path: "baldi-plus",
+        category: "Horror",
+        symbol: "B+",
+        description: "Explore a strange school and stay out of trouble.",
+        colors: ["#70a943", "#234e35"],
+        featured: true
+    },
+    {
+        name: "Baldi's Basics Remastered",
+        path: "baldi-remaster",
+        category: "Horror",
+        symbol: "B!",
+        description: "A creepy school trip with unpredictable surprises.",
+        colors: ["#b5b84a", "#48542e"]
+    },
+    {
+        name: "Bendy",
+        path: "bendy",
+        category: "Horror",
+        symbol: "B",
+        description: "A cartoon studio hides a dark secret.",
+        colors: ["#c58b39", "#2b211d"],
+        featured: true
+    },
+    {
+        name: "Bergen Truck",
+        path: "bergentruck",
+        category: "Simulation",
+        symbol: "🚚",
+        description: "Drive around and experiment in a vehicle-based game.",
+        colors: ["#57b4bf", "#29485d"]
+    },
+    {
+        name: "Blood Money",
+        path: "bloodmoney",
+        category: "Horror",
+        symbol: "$",
+        description: "A disturbing choice-driven experience.",
+        colors: ["#ad3455", "#381b36"]
+    },
+    {
+        name: "Buckshot Roulette",
+        path: "buckshot-roulette",
+        category: "Action",
+        symbol: "♠",
+        description: "A tense game of chance against an unsettling opponent.",
+        colors: ["#9c424f", "#201f2b"],
+        featured: true
+    },
+    {
+        name: "Class of '09",
+        path: "class-of-09",
+        category: "Story",
+        symbol: "09",
+        description: "A choice-driven high-school visual novel.",
+        colors: ["#e47da8", "#6543a5"]
+    },
+    {
+        name: "Cuphead",
+        path: "cuphead",
+        category: "Action",
+        symbol: "C!",
+        description: "A cartoon-style run-and-gun adventure.",
+        colors: ["#d84f44", "#74304a"],
+        featured: true
+    },
+    {
+        name: "Dead Plate",
+        path: "dead-plate",
+        category: "Horror",
+        symbol: "DP",
+        description: "A restaurant job takes a sinister turn.",
+        colors: ["#a94a42", "#39232e"]
+    },
+    {
+        name: "The Deadseat",
+        path: "deadseat",
+        category: "Horror",
+        symbol: "DS",
+        description: "A dark narrative experience with unsettling events.",
+        colors: ["#6878ad", "#20233d"]
+    },
+    {
+        name: "Deltatraveler",
+        path: "deltatraveler",
+        category: "RPG",
+        symbol: "DT",
+        description: "An adventure through strange worlds.",
+        colors: ["#56a7c5", "#37306b"]
+    },
+    {
+        name: "Do Not Take This Cat Home",
+        path: "donottakethiscathome",
+        category: "Horror",
+        symbol: "🐈",
+        description: "A cute cat and a decision you may regret.",
+        colors: ["#a78bfa", "#522c70"]
+    },
+    {
+        name: "Fears to Fathom: Home Alone",
+        path: "fears-to-fathom/home-alone",
+        category: "Horror",
+        symbol: "FTF",
+        description: "A night at home becomes increasingly frightening.",
+        colors: ["#526c91", "#20293e"],
+        featured: true
+    },
+    {
+        name: "Getting Over It",
+        path: "getting-over-it",
+        category: "Platformer",
+        symbol: "GO!",
+        description: "Climb with a hammer. Falling is part of the challenge.",
+        colors: ["#d69b45", "#67452c"],
+        featured: true
+    },
+    {
+        name: "Happy Sheepies",
+        path: "happy-sheepies",
+        category: "Simulation",
+        symbol: "🐑",
+        description: "A strange and playful sheep-themed game.",
+        colors: ["#8dcdce", "#416f9a"]
+    },
+    {
+        name: "Hotline Miami",
+        path: "hotline-miami",
+        category: "Action",
+        symbol: "HM",
+        description: "Fast top-down action with a neon retro aesthetic.",
+        colors: ["#ec5ab2", "#532e9d"]
+    },
+    {
+        name: "Human Expenditure Program",
+        path: "human-expenditure-program",
+        category: "Horror",
+        symbol: "HEP",
+        description: "An unsettling experimental horror experience.",
+        colors: ["#6c3b87", "#1e1e38"]
+    },
+    {
+        name: "Jelly Drift",
+        path: "jelly-drift",
+        category: "Racing",
+        symbol: "JD",
+        description: "Slide around corners in a drift-focused racer.",
+        colors: ["#43c1c7", "#3453a3"]
+    },
+    {
+        name: "Karlson",
+        path: "karlson",
+        category: "Action",
+        symbol: "K",
+        description: "Fast-paced first-person action and movement.",
+        colors: ["#ea792f", "#673e33"]
+    },
+    {
+        name: "Kindergarten",
+        path: "kindergarten",
+        category: "Story",
+        symbol: "KG",
+        description: "A bizarre school adventure full of secrets.",
+        colors: ["#e7be4c", "#9b4c55"]
+    },
+    {
+        name: "Lacey's Flash Games",
+        path: "lacysflashgames",
+        category: "Horror",
+        symbol: "LF",
+        description: "A collection of retro-style games with a dark edge.",
+        colors: ["#ef8db8", "#713d94"]
+    },
+    {
+        name: "Milkman Karlson",
+        path: "milkman-karlson",
+        category: "Action",
+        symbol: "MK",
+        description: "Physics-based action with ridiculous movement.",
+        colors: ["#e3d6a5", "#78604a"]
+    },
+    {
+        name: "Minesweeper Plus",
+        path: "minesweeperplus",
+        category: "Puzzle",
+        symbol: "✣",
+        description: "A twist on the classic mine-clearing puzzle.",
+        colors: ["#64a8a0", "#304a72"]
+    },
+    {
+        name: "OMORI",
+        path: "omori-fixed",
+        category: "RPG",
+        symbol: "O",
+        description: "An emotional role-playing adventure.",
+        colors: ["#d3d4d7", "#514e81"]
+    },
+    {
+        name: "People Playground",
+        path: "people-playground",
+        category: "Simulation",
+        symbol: "PP",
+        description: "Experiment with a physics sandbox.",
+        colors: ["#b6a3ed", "#544779"]
+    },
+    {
+        name: "Pizza Tower",
+        path: "pizza-tower",
+        category: "Platformer",
+        symbol: "PT",
+        description: "A frantic, colorful, high-speed platformer.",
+        colors: ["#ed7844", "#a53743"],
+        featured: true
+    },
+    {
+        name: "Raft",
+        path: "raft",
+        category: "Survival",
+        symbol: "RF",
+        description: "Try to survive while floating across the ocean.",
+        colors: ["#48b6c6", "#315779"]
+    },
+    {
+        name: "R.E.P.O.",
+        path: "repo",
+        category: "Horror",
+        symbol: "R",
+        description: "A cooperative-style horror extraction experience.",
+        colors: ["#83b7b0", "#303e5a"],
+        featured: true
+    },
+    {
+        name: "Schoolboy Runaway",
+        path: "schoolboy-runaway",
+        category: "Stealth",
+        symbol: "SR",
+        description: "Try to sneak around without getting caught.",
+        colors: ["#77a8d2", "#33445f"]
+    },
+    {
+        name: "Slender",
+        path: "slender",
+        category: "Horror",
+        symbol: "S",
+        description: "Explore the dark and try to survive.",
+        colors: ["#9aa6ae", "#252d32"]
+    },
+    {
+        name: "Sonic.EXE",
+        path: "sonic.exe",
+        category: "Horror",
+        symbol: "SX",
+        description: "A sinister spin on a familiar blue mascot.",
+        colors: ["#c92948", "#351c39"]
+    },
+    {
+        name: "Speed Stars",
+        path: "speed-stars",
+        category: "Racing",
+        symbol: "SS",
+        description: "A timing-based running and racing challenge.",
+        colors: ["#e4aa4f", "#a1485b"]
+    },
+    {
+        name: "Tattletail",
+        path: "tattletail",
+        category: "Horror",
+        symbol: "TT",
+        description: "A toy becomes a problem after dark.",
+        colors: ["#b87bdb", "#583e83"]
+    },
+    {
+        name: "That's Not My Neighbor",
+        path: "thats-not-my-neighbor",
+        category: "Puzzle",
+        symbol: "NN",
+        description: "Inspect visitors and decide who belongs.",
+        colors: ["#78b8b1", "#3b526c"]
+    },
+    {
+        name: "The Man in the Window",
+        path: "the-man-in-the-window",
+        category: "Horror",
+        symbol: "MW",
+        description: "A short horror story about a suspicious visitor.",
+        colors: ["#9a6b63", "#3e293d"]
+    },
+    {
+        name: "ULTRAKILL",
+        path: "ultrakill",
+        category: "Action",
+        symbol: "UK",
+        description: "High-speed, retro-inspired first-person combat.",
+        colors: ["#ec464b", "#5b233d"],
+        featured: true
+    },
+    {
+        name: "Undertale Yellow",
+        path: "undertale-yellow",
+        category: "RPG",
+        symbol: "UY",
+        description: "A fan-made adventure in the Undertale universe.",
+        colors: ["#e6c34d", "#685528"]
+    },
+    {
+        name: "Web Fishing",
+        path: "web-fishing",
+        category: "Simulation",
+        symbol: "WF",
+        description: "A relaxed fishing game with a social feel.",
+        colors: ["#57b8d1", "#384da0"]
+    },
+    {
+        name: "Witch's Heart",
+        path: "witch-heart",
+        category: "Story",
+        symbol: "WH",
+        description: "A mysterious story-driven adventure.",
+        colors: ["#b77bdb", "#473675"]
+    },
+    {
+        name: "Yandere Simulator",
+        path: "yandere-simulator",
+        category: "Stealth",
+        symbol: "YS",
+        description: "A stealth-focused school simulation.",
+        colors: ["#dd759f", "#633456"]
+    },
+    {
+        name: "Yume Nikki",
+        path: "yume-nikki",
+        category: "Adventure",
+        symbol: "YN",
+        description: "Explore surreal dreamlike worlds.",
+        colors: ["#7079c6", "#292b4b"]
+    }
+];
+
+/* If a game doesn't use index.html, set a custom entry, for example:
+   entry: "play.html"
+*/
+games.forEach(game => {
+    game.entry = game.entry || "index.html";
+});
+
+/* STORAGE */
+
+function loadArray(key) {
+    try {
+        const value = JSON.parse(localStorage.getItem(key) || "[]");
+        return Array.isArray(value) ? value : [];
+    } catch {
+        return [];
+    }
+}
+
+let favorites = loadArray("tgv2_favorites");
+let recentGames = loadArray("tgv2_recent");
+let activeCategory = "All";
+let searchText = "";
+
+const gameGrid = document.getElementById("gameGrid");
+const favoriteGrid = document.getElementById("favoriteGrid");
+const searchInput = document.getElementById("searchInput");
+const sortSelect = document.getElementById("sortSelect");
+
+const overlay = document.getElementById("playerOverlay");
+const gameFrame = document.getElementById("gameFrame");
+const playerTitle = document.getElementById("playerTitle");
+
+let currentlyPlaying = null;
+
+function saveStorage() {
+    localStorage.setItem("tgv2_favorites", JSON.stringify(favorites));
+    localStorage.setItem("tgv2_recent", JSON.stringify(recentGames));
+}
+
+function getGameUrl(game) {
+    return "./" + game.path + "/" + game.entry;
+}
+
+function getGameByName(name) {
+    return games.find(game => game.name === name);
+}
+
+/* RENDER CARDS */
+
+function createCard(game) {
+    const card = document.createElement("article");
+    card.className = "game-card";
+
+    const art = document.createElement("div");
+    art.className = "game-art";
+    art.style.setProperty("--art1", game.colors[0]);
+    art.style.setProperty("--art2", game.colors[1]);
+    art.style.setProperty("--glow", game.colors[0] + "55");
+
+    const symbol = document.createElement("div");
+    symbol.className = "game-art-symbol";
+    symbol.textContent = game.symbol;
+
+    const label = document.createElement("div");
+    label.className = "card-label";
+    label.textContent = game.featured ? "FEATURED" : game.category.toUpperCase();
+
+    const favoriteButton = document.createElement("button");
+    favoriteButton.className = "favorite-btn";
+    favoriteButton.type = "button";
+    favoriteButton.textContent = favorites.includes(game.name) ? "♥" : "♡";
+    favoriteButton.classList.toggle("favorited", favorites.includes(game.name));
+    favoriteButton.setAttribute(
+        "aria-label",
+        favorites.includes(game.name)
+            ? "Remove " + game.name + " from favorites"
+            : "Add " + game.name + " to favorites"
+    );
+
+    favoriteButton.addEventListener("click", event => {
+        event.stopPropagation();
+        toggleFavorite(game.name);
+    });
+
+    art.append(label, symbol, favoriteButton);
+
+    const info = document.createElement("div");
+    info.className = "game-info";
+
+    const name = document.createElement("div");
+    name.className = "game-name";
+    name.textContent = game.name;
+    name.title = game.name;
+
+    const description = document.createElement("div");
+    description.className = "game-description";
+    description.textContent = game.description;
+
+    const footer = document.createElement("div");
+    footer.className = "game-footer";
+
+    const genre = document.createElement("span");
+    genre.className = "game-genre";
+    genre.textContent = game.category;
+
+    const play = document.createElement("button");
+    play.className = "play-btn";
+    play.type = "button";
+    play.textContent = "▶ PLAY";
+    play.addEventListener("click", () => launchGame(game));
+
+    footer.append(genre, play);
+    info.append(name, description, footer);
+    card.append(art, info);
+
+    card.addEventListener("dblclick", () => launchGame(game));
+
+    return card;
+}
+
+function getVisibleGames() {
+    let list = [...games];
+
+    if (activeCategory !== "All") {
+        list = list.filter(game => game.category === activeCategory);
+    }
+
+    if (searchText) {
+        list = list.filter(game =>
+            (game.name + " " + game.category + " " + game.description)
+                .toLowerCase()
+                .includes(searchText)
+        );
+    }
+
+    if (sortSelect.value === "az") {
+        list.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortSelect.value === "za") {
+        list.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortSelect.value === "recent") {
+        list.sort((a, b) =>
+            recentGames.indexOf(b.name) - recentGames.indexOf(a.name)
+        );
+    } else {
+        list.sort((a, b) => Number(b.featured) - Number(a.featured));
+    }
+
+    return list;
+}
+
+function renderMainGrid() {
+    const list = getVisibleGames();
+    gameGrid.replaceChildren();
+
+    if (!list.length) {
+        const empty = document.createElement("div");
+        empty.className = "no-results";
+        empty.textContent = "No games found. Try another search.";
+        gameGrid.appendChild(empty);
+        return;
+    }
+
+    list.forEach(game => gameGrid.appendChild(createCard(game)));
+}
+
+function renderFavorites() {
+    favoriteGrid.replaceChildren();
+
+    const list = games.filter(game => favorites.includes(game.name));
+
+    if (!list.length) {
+        const empty = document.createElement("div");
+        empty.className = "no-results";
+        empty.textContent = "No favorites yet. Press the heart on any game card.";
+        favoriteGrid.appendChild(empty);
+        return;
+    }
+
+    list.forEach(game => favoriteGrid.appendChild(createCard(game)));
+}
+
+function renderRecent() {
+    const recentList = document.getElementById("recentList");
+    recentList.replaceChildren();
+
+    const list = recentGames
+        .map(getGameByName)
+        .filter(Boolean);
+
+    if (!list.length) {
+        const empty = document.createElement("div");
+        empty.className = "section-description";
+        empty.textContent = "Your recently opened games will appear here.";
+        recentList.appendChild(empty);
+        return;
+    }
+
+    list.forEach(game => {
+        const button = document.createElement("button");
+        button.className = "recent-item";
+        button.type = "button";
+        button.textContent = "▶  " + game.name;
+        button.addEventListener("click", () => launchGame(game));
+        recentList.appendChild(button);
+    });
+}
+
+function updateStats() {
+    document.getElementById("totalGames").textContent = games.length;
+    document.getElementById("favoriteCount").textContent = favorites.length;
+    document.getElementById("playedCount").textContent = recentGames.length;
+}
+
+function renderAll() {
+    renderMainGrid();
+    renderFavorites();
+    renderRecent();
+    updateStats();
+}
+
+/* FILTERS AND SEARCH */
+
+document.getElementById("filters").addEventListener("click", event => {
+    const button = event.target.closest("[data-category]");
+    if (!button) return;
+
+    activeCategory = button.dataset.category;
+
+    document.querySelectorAll(".filter-btn").forEach(item => {
+        item.classList.toggle("active", item === button);
+    });
+
+    renderMainGrid();
+});
+
+searchInput.addEventListener("input", () => {
+    searchText = searchInput.value.trim().toLowerCase();
+    renderMainGrid();
+});
+
+sortSelect.addEventListener("change", renderMainGrid);
+
+/* FAVORITES */
+
+function toggleFavorite(name) {
+    if (favorites.includes(name)) {
+        favorites = favorites.filter(item => item !== name);
+    } else {
+        favorites.push(name);
+    }
+
+    saveStorage();
+    renderAll();
+}
+
+/* GAME PLAYER */
+
+function launchGame(game) {
+    currentlyPlaying = game;
+
+    recentGames = [
+        game.name,
+        ...recentGames.filter(name => name !== game.name)
+    ].slice(0, 12);
+
+    saveStorage();
+
+    playerTitle.textContent = game.name;
+    gameFrame.src = getGameUrl(game);
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+
+    renderRecent();
+    updateStats();
+}
+
+function closePlayer() {
+    overlay.classList.remove("open");
+    document.body.style.overflow = "";
+    gameFrame.src = "about:blank";
+    currentlyPlaying = null;
+}
+
+document.getElementById("closePlayer").addEventListener("click", closePlayer);
+
+document.getElementById("openNewTab").addEventListener("click", () => {
+    if (!currentlyPlaying) return;
+    window.open(getGameUrl(currentlyPlaying), "_blank", "noopener");
+});
+
+document.getElementById("fullscreenBtn").addEventListener("click", async () => {
+    const frameWrap = document.getElementById("frameWrap");
+
+    try {
+        if (document.fullscreenElement) {
+            await document.exitFullscreen();
+        } else {
+            await frameWrap.requestFullscreen();
+        }
+    } catch (error) {
+        alert("Fullscreen is not available in this browser.");
+    }
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && overlay.classList.contains("open")) {
+        closePlayer();
+    }
+
+    if (
+        event.key === "/" &&
+        !overlay.classList.contains("open") &&
+        document.activeElement.tagName !== "INPUT"
+    ) {
+        event.preventDefault();
+        searchInput.focus();
+    }
+});
+
+/* INITIALIZE */
+
+document.getElementById("totalGames").textContent = games.length;
+renderAll();
+</script>
+</body>
+</html>
